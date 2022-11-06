@@ -19,3 +19,17 @@ describe("mockTest", () => {
     expect(mockCallback.mock.results[0].value).toBe(42);
   });
 });
+
+describe("mockTest", () => {
+  test("Test 1 : using API version - toBeCalledTimes", () => {
+    const mockCallback = jest.fn((x) => 42 + x);
+    mock([0, 1], mockCallback);
+    expect(mockCallback).toBeCalledTimes(2);
+  });
+
+  test("Test 2 : using API version -toBeCalledWitdh ", () => {
+    const mockCallback = jest.fn((x) => 42 + x);
+    mock([0, 1], mockCallback);
+    expect(mockCallback).toBeCalledWith(0 || 1);
+  });
+});
