@@ -1,4 +1,4 @@
-const mock = require("../src/mock/mock.js");
+const mock = require("../mock.js");
 
 describe("mockTest", () => {
   test("Test 1 : old version - calls.length", () => {
