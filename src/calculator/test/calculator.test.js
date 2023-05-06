@@ -1,60 +1,131 @@
-const Calculator = require("../Calculator.js");
+const Calculator = require('../Calculator.js');
 
-describe("Calculator", () => {
-  let cal;
+let calculator;
+
+describe('Add Test', () => {
   beforeEach(() => {
-    cal = new Calculator();
-  });
-  test("add test", () => {
-    expect(cal.value).toBe(0);
+    calculator = new Calculator();
   });
 
-  test("set Test", () => {
-    cal.set(50);
-    expect(cal.value).toBe(50);
+  test('AddTest : 50 + 30', () => {
+    calculator.set(50);
+    calculator.add(30);
+    expect(calculator.get()).toBe(80);
   });
 
-  test("clear Test", () => {
-    cal.set(50);
-    cal.clear();
-    expect(cal.value).toBe(0);
+  test('AddTest : 50 + 100', () => {
+    calculator.set(50);
+    expect(() => calculator.add(100)).toThrowError('Value can not be greater than 100');
+    expect(calculator.get()).toBe(50);
   });
 
-  test("add Test", () => {
-    cal.set(1);
-    cal.add(50);
-    expect(cal.value).toBe(51);
+  test('AddTest : 50 + 30', () => {
+    calculator.set(50);
+    expect(() => calculator.add(100)).toThrowError('Value can not be greater than 100');
+    expect(calculator.get()).toBe(50);
+  });
+});
+
+describe('Clear Test', () => {
+  beforeEach(() => {
+    calculator = new Calculator();
   });
 
-  test("add Error Test", () => {
-    expect(() => {
-      cal.add(101);
-    }).toThrow("Value can not be greater than 100");
+  test('AddTest : 50 + 30', () => {
+    calculator.set(50);
+    calculator.add(30);
+    expect(calculator.get()).toBe(80);
+
+    calculator.clear();
+    expect(calculator.get()).toBe(0);
   });
 
-  test("subtract Test", () => {
-    cal.set(51);
-    cal.subtract(50);
-    expect(cal.value).toBe(1);
+  test('AddTest : 50 - 30', () => {
+    calculator.set(50);
+    calculator.subtract(30);
+    expect(calculator.get()).toBe(20);
+
+    calculator.clear();
+    expect(calculator.get()).toBe(0);
+  });
+});
+
+describe('Subtract Test', () => {
+  beforeEach(() => {
+    calculator = new Calculator();
   });
 
-  test("subtract Test", () => {
-    cal.set(5);
-    cal.multiply(5);
-    expect(cal.value).toBe(25);
+  test('Subtract Test : 50 - 30', () => {
+    calculator.set(50);
+    calculator.subtract(30);
+    expect(calculator.get()).toBe(20);
   });
 
-  describe("divide", () => {
-    test("0/0=== NAN", () => {
-      cal.clear();
-      cal.divide(0);
-      expect(cal.value).toBe(NaN);
-    });
+  test('AddTest : 50 - 50', () => {
+    calculator.set(50);
+    calculator.subtract(50);
+    expect(calculator.get()).toBe(0);
+  });
 
-    test("1/0=== Infinity", () => {
-      cal.set(1);
-      cal.divide(0);
-      expect(cal.value).toBe(Infinity);
-    });
+  test('AddTest : 50 - 100', () => {
+    calculator.set(50);
+    expect(() => calculator.subtract(100)).toThrowError(
+      'The value should be greater than or equal to 0'
+    );
+    expect(calculator.get()).toBe(50);
+  });
+});
+
+describe('Multiply Test', () => {
+  beforeEach(() => {
+    calculator = new Calculator();
+  });
+
+  test('Multiply Test : 3 * 5', () => {
+    calculator.set(3);
+    calculator.multiply(5);
+    expect(calculator.get()).toBe(15);
+  });
+
+  test('Multiply Test : 3 * 0', () => {
+    calculator.set(3);
+    calculator.multiply(0);
+    expect(calculator.get()).toBe(0);
+  });
+
+  test('Multiply Test : 3 * zero', () => {
+    calculator.set(3);
+    calculator.multiply('zero');
+    expect(calculator.get()).toBeNaN();
+  });
+});
+
+describe('Divide Test', () => {
+  beforeEach(() => {
+    calculator = new Calculator();
+  });
+
+  test('Divide Test : 8 / 4', () => {
+    calculator.set(8);
+    calculator.divide(4);
+    expect(calculator.get()).toBe(2);
+  });
+
+  test('Divide Test : 2 / 4', () => {
+    calculator.set(2);
+    calculator.divide(4);
+    expect(calculator.get()).toBe(0.5);
+  });
+
+  test('Divide Test : 2 / 0', () => {
+    calculator.set(2);
+    expect(() => calculator.divide(0)).toThrowError('The value cannot be zero');
+    expect(calculator.get()).toBe(2);
+  });
+
+  test('Divide Test : 0 / 2', () => {
+    calculator.clear();
+    calculator.divide(2);
+    expect(calculator.get()).toBe(0);
   });
 });
