@@ -8,9 +8,7 @@ class UserService {
     if (!this.isLogedIn) {
       //return fetch('http://example.com/login/id+password') //
       // .then((response) => response.json());
-      return this.userClient
-        .login(id, password) //
-        .then((data) => (this.isLogedIn = true));
+      return this.userClient.login(id, password).then((data) => (this.isLogedIn = true));
     }
   }
 }

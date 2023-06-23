@@ -1,32 +1,29 @@
-const UserService = require("../user_service.js");
-const UserClient = require("../user_client.js");
+const UserService = require('../user_service.js');
+const UserClient = require('../user_client.js');
 
-jest.mock("../user_client.js");
+jest.mock('../user_client.js');
 
-describe("userService test", () => {
-  const login = jest.fn(async () => "success");
+describe('userService Mock test', () => {
+  const login = jest.fn(async () => 'success');
 
   UserClient.mockImplementation(() => {
-    return {
-      login,
-    };
+    return { login };
   });
+
   let userService;
 
   beforeEach(() => {
     userService = new UserService(new UserClient());
-    login.mockClear();
-    UserClient.mockClear();
   });
 
-  test("user tried to login", async () => {
-    await userService.login("abc", "abc");
-    expect(login.mock.calls.length).toBe(1);
+  test('login Test', async () => {
+    await userService.login('asd', 'asd');
+    expect(login).toHaveBeenCalledTimes(1);
   });
 
-  test("shold not call login() if user already logined", async () => {
-    await userService.login("abc", "abc");
-    expect(login.mock.calls.length).toBe(1);
-    expect(login.mock.calls.length).toBe(1);
+  test('login aleady Test', async () => {
+    await userService.login('asd', 'asd');
+    await userService.login('qwe', 'qwe');
+    expect(login).toHaveBeenCalledTimes(1);
   });
 });
